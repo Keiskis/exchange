@@ -12,8 +12,9 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
-import Loader.FileDataLoaderParser;
+import Loader.FileDataLoader;
 import Processor.ExchangeCalculator;
+import Processor.MainData;
 
 public class UserWindow extends JApplet {
 
@@ -22,25 +23,25 @@ public class UserWindow extends JApplet {
 	static JLabel labelOutput = new JLabel("0.0", JLabel.LEFT);
 	static JLabel label = new JLabel(" ");
 	static JTextField inputValue = new JTextField(15);
-	static JComboBox comboFrom = new JComboBox();
-	static JComboBox comboTo = new JComboBox();
+	static JComboBox<String> comboFrom = new JComboBox<String>();
+	static JComboBox<String> comboTo = new JComboBox<String>();
 	static JButton buttonCalculate = new JButton("Calculate");
-	private String fromIndex = "";
-	private String toIndex = "";
-	private String amount = "0.0";
+	String fromIndex = "";
+	String toIndex = "";
+	String amount = "0.0";
 
 	public void init() {
-		for (String currency : FileDataLoaderParser.coins.keySet()) {
+		for (String currency : MainData.coins.keySet()) {
 			comboFrom.addItem(currency);
 			comboTo.addItem(currency);
 		}
 
 		fromIndex = (String) comboFrom.getSelectedItem();
 		toIndex = (String) comboTo.getSelectedItem();
-		if (!FileDataLoaderParser.err.equals("")) {
+		if (MainData.err != null) {
 			label.setFont(new Font("Courier New", Font.ITALIC, 8));
 			label.setForeground(Color.RED);
-			label.setText(FileDataLoaderParser.err);
+			label.setText(MainData.err);
 		}
 		buttonCalculate.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -48,12 +49,12 @@ public class UserWindow extends JApplet {
 				if (amount.equals(""))
 					amount = "0.0";
 				System.out.println("User select: " + amount + " " + fromIndex + ", convert to: " + toIndex);
-				if (fromIndex != null && toIndex != null){
+				if (fromIndex != null && toIndex != null) {
 					amount = ExchangeCalculator.exchange(fromIndex, toIndex, amount);
-				labelOutput.setText(amount);
-				}else{
+					labelOutput.setText(amount);
+				} else {
 					labelOutput.setText("ERROR");
-					System.out.println("ERROR: " + FileDataLoaderParser.err);
+					System.out.println("ERROR: " + MainData.err);
 				}
 			}
 		});

@@ -5,7 +5,7 @@ import Gui.UserWindow;
 public class Main {
 
 	public static void main(String[] args) {
-		FileDataLoaderParser.getDataFromFile();
+		FileDataLoader.getDataFromFile();
 		UserWindow.run(new UserWindow());
 	}
 

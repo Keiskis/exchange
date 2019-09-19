@@ -1,18 +1,22 @@
 package Processor;
 
-import Loader.FileDataLoaderParser;
+import Loader.FileDataLoader;
 
 public class ExchangeCalculator {
 
+	static double exchangeRateFrom;
+	static double exchangeRateTo;
+	static double exchangeAmount;
+
 	public static String exchange(String from, String to, String amount) {
-		double exchangeRateFrom = FileDataLoaderParser.coins.get(from);
-		double exchangeRateTo = FileDataLoaderParser.coins.get(to);
-		double exchangeAmount = 0.0;
-		if (amount.contains(","))
+		 exchangeRateFrom = MainData.coins.get(from);
+		 exchangeRateTo = MainData.coins.get(to);
+		 exchangeAmount = 0.0;
+		if (amount.contains(",")) {
 			exchangeAmount = Double.parseDouble(amount.replace(",", "."));
-		else
+		} else {
 			exchangeAmount = Double.parseDouble(amount);
-		
+		}
 		System.out.println("Exchange rate from: [" + from + "] " + exchangeRateFrom + ", amount: " + exchangeAmount + ", exchange rate to: ["
 			+ to + "] " + exchangeRateTo);
 		double withdravalAmaount = (exchangeRateFrom * exchangeAmount) / exchangeRateTo;
