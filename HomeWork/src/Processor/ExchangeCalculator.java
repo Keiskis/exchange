@@ -1,16 +1,15 @@
 package Processor;
 
-import Loader.FileDataLoader;
-
 public class ExchangeCalculator {
 
 	static double exchangeRateFrom;
 	static double exchangeRateTo;
 	static double exchangeAmount;
-
+	static MainData data =  MainData.getInstance();
+	
 	public static String exchange(String from, String to, String amount) {
-		 exchangeRateFrom = MainData.coins.get(from);
-		 exchangeRateTo = MainData.coins.get(to);
+		 exchangeRateFrom = data.getCoins().get(from);
+		 exchangeRateTo = data.getCoins().get(to);
 		 exchangeAmount = 0.0;
 		if (amount.contains(",")) {
 			exchangeAmount = Double.parseDouble(amount.replace(",", "."));

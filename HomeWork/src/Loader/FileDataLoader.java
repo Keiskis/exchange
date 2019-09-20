@@ -7,12 +7,16 @@ import Processor.MainData;
 import Processor.Parser;
 
 public class FileDataLoader {
-
- 	public static void getDataFromFile() {
-		try (BufferedReader bufferedReader = new BufferedReader(new FileReader("c:/file.csv"))) {
+	 
+	 static String filePath = "c:/tmp/file.csv";
+	 static MainData data =  MainData.getInstance();
+	
+ 	public static  void getDataFromFile() {
+		try (BufferedReader bufferedReader = new BufferedReader(new FileReader(filePath))) {
+			System.out.println("Loaded file: " + filePath);
 			Parser.parse(bufferedReader);
 		} catch (IOException e) {
-			MainData.err = e.getMessage(); 
+			data.setErr(e.getMessage()); 
 			e.printStackTrace();
 		}
 	}
